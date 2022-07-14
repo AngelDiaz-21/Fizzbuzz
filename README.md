@@ -172,11 +172,13 @@ jobs:
 Este es un GitHub Action que automatiza la ejecución de las pruebas cada vez que se haga un PUSH al repositorio de GitHub.
 
 **Notas**
+
 * El comando "on" significa que esta prueba se va a realizar cada que se haga un push, cada que se hagan nuevos cambios.
 * El comando "runs-on" indica que va a montar un contenedor (máquina vritual), en este caso sería ubuntu.
 * EL step github actions abstrae las herramientas que necesitamos, uno es para bajar cossas de git y el otro para correr jest.
 
 ## 4. Linter
+
 JS y cada lenguaje tienen herramientas para ayudarnos a cuidar la legibilidad en nuestro código, se les conoce como linters.
 
 Para este proyecto se utilizo ESLint, para instalarlo solo se necesita el siguiente comando `npm install eslint --save-de`
@@ -203,10 +205,10 @@ Dentro de las reglas que hemos definido tenemos las siguientes:
         semi: ["error", "always"]
     }
 ```
+
     ->INDENT : Identación (2, 4 espacios o uso de tabs).
     ->QUOTES: Comillas (dobles o simples).
     ->SEMI: Punto y coma (nunca o siempre).
-
 
 También se cuenta con la documentación si en dado se necesitará saber más de las reglas: https://eslint.org/docs/rules/
 
@@ -214,9 +216,8 @@ Una vez definidas las reglas tenemos que ejecutar el siguiente comando `npm run 
 
 Para arreglar todas las inconsistencias de escritura debemos de ejecutar el siguiente comando `npm run linter-fix` y con eso los archivos quedarán con el formato definido en las reglas.
 
-
-
 **Notas finales**
+
 Dependencias necesarias:
 
 * EsLint
@@ -224,8 +225,8 @@ Dependencias necesarias:
 * Jest
 * GitHub Actions
 
-Refactorizar = Modularizar: Se trata de darle estructura a lo que tenemos.
+Refactorizar = Modularizar: Se trata de darle estructura a lo que tenemos
 
-Tecnica para refactorizar: Orientación a objetos con pruebas.
+Tecnica para refactorizar: Orientación a objetos con pruebas
 
 Debuggear: Probar paso a paso (puede ser aplicando console.log)
