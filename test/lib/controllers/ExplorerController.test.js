@@ -1,7 +1,7 @@
 const ExplorerController = require("../../../lib/controllers/ExplorerController");
 
-describe('Unit test for ExplorerController class', () => {
-    test('1) Get explorer by mission', () => {
+describe('Prueba unitaria para la clase ExplorerController', () => {
+    test('1) Obtener la lista de explorers por misión', () => {
         const explorerByMission = ExplorerController.getExplorersByMission("node");
 
         expect (explorerByMission).toEqual([
@@ -127,7 +127,7 @@ describe('Unit test for ExplorerController class', () => {
         ]);
     });
     
-    test('2) Get explorers for usernames by mission', () => {
+    test('2) Obtener la lista de nombres de usuarios explorers por misión', () => {
         const explorerUsernamesByMission = ExplorerController.getExplorersUsernamesByMission("node");
 
         expect (explorerUsernamesByMission).toEqual([
@@ -144,9 +144,15 @@ describe('Unit test for ExplorerController class', () => {
         ]);
     }); 
 
-    test('3) Get explorers amount by mission', () => {
+    test('3) Obtener la cantidad de explorers de la misión', () => {
         const explorerAmountByMission = ExplorerController.getExplorersAmountByMission("node");
 
         expect (explorerAmountByMission).toBe(10);
     }); 
+
+    test('4) Validación de fizzbuzz de acuerdo al número recibido', () => {
+        const validationInNUmber = ExplorerController.getValidationInNumber(15);
+
+        expect (validationInNUmber).toBe("FIZZBUZZ");
+    });
 })
