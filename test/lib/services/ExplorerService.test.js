@@ -1,10 +1,10 @@
 const Reader = require ("../../../lib/utils/Reader");
 const ExplorerService = require("../../../lib/services/ExplorerService");
 
-describe("Unit test for ExplorerService class", () => {
+describe("Prueba unitaria para la clase ExplorerService", () => {
     const explorers = Reader.readJsonFile("explorers.json");
     
-    test("1) Filter explorer for mission node", () => {
+    test("1) Filtar la lista de explorers de la misión node", () => {
         const explorerFilter = ExplorerService.filterByMission (explorers, "node");
         
         expect (explorerFilter).toEqual([
@@ -130,13 +130,13 @@ describe("Unit test for ExplorerService class", () => {
         ]);
     });
 
-    test("2) Get amount of explorers by mission node", () => {
+    test("2) Obtener la cantidad de explores de la misión node", () => {
         const getExplorerByMission = ExplorerService.getAmountOfExplorersByMission (explorers, "node");
         
         expect(getExplorerByMission).toBe(10);
     });
 
-    test("3) Get explorers usernames by mission node", () => {
+    test("3) Otener la lista de nombres de usuario de explorers de la misión node", () => {
         const explorerUsernameByMission = ExplorerService.getExplorersUsernamesByMission (explorers, "node");
 
         expect(explorerUsernameByMission).toEqual([
