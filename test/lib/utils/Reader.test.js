@@ -1,6 +1,6 @@
 const Reader = require("../../../lib/utils/Reader");
 
-describe("Test for Reader", () => {
+describe("Prueba unitaria para la clase Reader", () => {
     const explorers = Reader.readJsonFile("explorers.json");
 
     test("1. Obtener el tamaño de la lista de explorers", () => {
