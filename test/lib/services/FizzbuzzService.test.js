@@ -1,4 +1,3 @@
-const { applyValidationInNumber } = require("../../../lib/services/FizzbuzzService");
 const ExplorerValidation = require("../../../lib/services/FizzbuzzService");
 
 describe("Pruebas de unidad para el método applyValidationInExplorer de la clase FizzbuzzService", () => {
