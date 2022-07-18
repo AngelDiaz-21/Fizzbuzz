@@ -224,7 +224,7 @@ Una vez definidas las reglas se tiene que ejecutar el siguiente comando `npm run
 
 Para arreglar todas las inconsistencias de escritura se debe de ejecutar el siguiente comando `npm run linter-fix` y con eso los archivos quedarán con el formato definido en las reglas.
 
-### Resultados
+### Resultados - Primera parte
 
 En el siguiente diagrama se representan las clases que se han creado en está primera parte, que nos permiten implementar la lógica legada anrteriormente.
 
@@ -233,3 +233,94 @@ En el siguiente diagrama se representan las clases que se han creado en está pr
       Reader-->ExplorerService;
       FizzbuzzService;
 ```
+## Segunda parte - Crear un API para exponer las funcionalidades
+
+Necesitamos usar las funcionalidades creadas en la primera parte para exponerlas con un API, esto ayudará a poder conectar aplicaciones de clientes que requieren los servicios.
+
+Hasta el momento se cuenta con la siguiente estructura de directorio:
+- Carpeta *services*: Se tienen dos clases para realizar toda la lógica que se necesita.
+- Carpeta *utils*: Se tiene una clase para leer un archivo json.
+
+
+| Endpoint|Request|Response |
+|---------|-------|---------|
+| `localhost:3000/v1/explorers/:mission` | `localhost:3000/v1/explorers/node` | Deberás obtener la lista de explorers en la misión que enviaste (node o java) |
+| `localhost:3000/v1/explorers/amount/:mission` | `localhost:3000/v1/explorers/amount/node` | Deberás obtener la cantidad de explorers según la misión que enviaste (node o java) |
+| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de usernames en la misión que enviaste (node o java) |
+
+
+### API con express
+
+Se necesita crear otra clase que permita extender un puente entre la funcionalidad y el server que se va a crear, para que el server que será el API solo se comuniqué a partir de ahí. El siguiente diagrama representa las clases, la forma en que se comunican así como el server.
+
+```mermaid
+  graph TD;
+      Reader-->ExplorerService;
+      ExplorerService-->ExplorerController;
+      FizzbuzzService-->ExplorerController;
+      ExplorerController-->Server;
+```
+
+La finalidad de la separación de clases y directorios es que ayuda a tener una estructura pero también una separación de responsabilidades.
+
+- Services: Clases para aplicar la lógica que necesitamos usando modelos.
+- Utils: Clases auxiliares.
+- Controller: Uso exclusivo de services.
+
+#### Creando controller para conectar la funcionalidad con el server
+
+![Archivo ExplorerController.js](./images/ExplorerController.png "Archivo ExplorerController.js")
+
+1. Se creo el archivo ExplorerController en el siguiente directorio `lib/controllers/ExplorerController.js`.
+2. Se importaron las clases `ExplorerServices`, `FizzbuzzService` y `Reader`.
+3. Se creo un método para obtener la lista de explorers filtrados por misión:
+    - Se creo un método `static getExplorersByMission` el cual recibe un parámetro llamado mission.
+    - Dentro del método se llamo la función del Reader `Reader.readJsonFile("explorers.json")` para obtener la lista de explorers del archivo json.
+    - Se llamo el método de `ExplorerService` para filtrar por misión, usando el parámetro mission y la lista de explorers.
+    - Hacer un return del resultado obtenido.
+4. Se creo un método `static getExplorersUsernamesByMission(mission)` y se regreso la lista de usernames de los explorers filtrados por la misión enviada.
+5. Se creo un método `static getExplorersAmountByMission(mission)` y se regreso la cantidad de explorers en la misión enviada.
+
+#### Pruebas de unidad del controller
+
+![Archivo ExplorerController.test.js](./images/ExplorerController-test.png "Archivo ExplorerController.test.js")
+
+Al archivo ExplorerController también se le realizó pruebas de unidad. 
+
+Para el primer test se obtuvo la lista de explorers por misión, para el segundo test se obtuvo la lista de nombres de usuarios de explorers por misión, para el tercer test se obtuvo la cantidad de explorers dependiendo de la misión. Para todos estos test la misión que se utilizó fue con node y todas pasaron.
+
+#### Creando server con API
+1. Se creo un script en `lib/server.js`.
+2. Se creo un servidor de express.
+  - Se instaló express.
+  - Se creo un server básico.
+  - Se automatizo el package.json para automatizar el server, donde se agregó la siguiente línea dentro del apartado `scripts`:
+  `"server": "node ./lib/server.js"`, para después solo ejecutar el comando `npm run server` para iniciar el servidor.
+4. Se importo el controller.
+5. Se creo el primer endpoint para recibir un parámetro por query params, y regresar la lista de explorers filtrados por el parámetro.
+
+    Notas:
+      - Este es un método GET que va a devolver información cuando se consulte.
+      - La url de este endpoint será: ``localhost:3000/v1/explorers/:mission`` (:mission es un query param).
+      - Se puede probar esta url con ``localhost:3000/v1/explorers/node`` o ``localhost:3000/v1/explorers/java``.
+      - El query param que se envia por la url se puede recibir como ``const mission = request.params.mission;``.
+      - Revisa como regresar información: ``response.json(explorersInMission)``.
+
+6. Se creo otro endpoint para regresar la cantidad de explorers según la misión que se envié.
+    - Dentro del endpoint se puede regresar un objeto con el nombre de la misión y la cantidad: response.json({mission: request.params.mission, quantity: explorersAmountInMission});
+7. Se creo el último endpoint para regresar la lista de usernames de los explorers filtrados por la misión.
+
+`Archivo server.js`
+![Archivo server.js](./images/server.png "Archivo server.js")
+
+`Endpoint para regresar la lista de explorers filtrados por el parámetro.`
+
+![Resultados del endpoint 1](./images/endpoint-1.png "Resultados del endpoint 1")
+
+`Endpoint para regresar la cantidad de explorers según la misión que se envié.`
+
+![Resultados del endpoint 2](./images/endpoint-2.png "Resultados del endpoint 2")
+
+`Endpoint para regresar la lista de usernames de los explorers filtrados por la misión.`
+
+![Resultados del endpoint 3](./images/endpoint-3.png "Resultados del endpoint 3")
