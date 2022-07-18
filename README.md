@@ -233,21 +233,21 @@ En el siguiente diagrama se representan las clases que se han creado en está pr
       Reader-->ExplorerService;
       FizzbuzzService;
 ```
+
 ## Segunda parte - Crear un API para exponer las funcionalidades
 
 Necesitamos usar las funcionalidades creadas en la primera parte para exponerlas con un API, esto ayudará a poder conectar aplicaciones de clientes que requieren los servicios.
 
 Hasta el momento se cuenta con la siguiente estructura de directorio:
+
 - Carpeta *services*: Se tienen dos clases para realizar toda la lógica que se necesita.
 - Carpeta *utils*: Se tiene una clase para leer un archivo json.
 
-
-| Endpoint|Request|Response |
-|---------|-------|---------|
-| `localhost:3000/v1/explorers/:mission` | `localhost:3000/v1/explorers/node` | Deberás obtener la lista de explorers en la misión que enviaste (node o java) |
-| `localhost:3000/v1/explorers/amount/:mission` | `localhost:3000/v1/explorers/amount/node` | Deberás obtener la cantidad de explorers según la misión que enviaste (node o java) |
-| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de usernames en la misión que enviaste (node o java) |
-
+| Endpoint                                           | Request                                        | Response                                                                               |
+| -------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `localhost:3000/v1/explorers/:mission`           | `localhost:3000/v1/explorers/node`           | Deberás obtener la lista de explorers en la misión que enviaste (node o java)        |
+| `localhost:3000/v1/explorers/amount/:mission`    | `localhost:3000/v1/explorers/amount/node`    | Deberás obtener la cantidad de explorers según la misión que enviaste (node o java) |
+| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de usernames en la misión que enviaste (node o java)        |
 
 ### API con express
 
@@ -274,10 +274,10 @@ La finalidad de la separación de clases y directorios es que ayuda a tener una 
 1. Se creo el archivo ExplorerController en el siguiente directorio `lib/controllers/ExplorerController.js`.
 2. Se importaron las clases `ExplorerServices`, `FizzbuzzService` y `Reader`.
 3. Se creo un método para obtener la lista de explorers filtrados por misión:
-    - Se creo un método `static getExplorersByMission` el cual recibe un parámetro llamado mission.
-    - Dentro del método se llamo la función del Reader `Reader.readJsonFile("explorers.json")` para obtener la lista de explorers del archivo json.
-    - Se llamo el método de `ExplorerService` para filtrar por misión, usando el parámetro mission y la lista de explorers.
-    - Hacer un return del resultado obtenido.
+   - Se creo un método `static getExplorersByMission` el cual recibe un parámetro llamado mission.
+   - Dentro del método se llamo la función del Reader `Reader.readJsonFile("explorers.json")` para obtener la lista de explorers del archivo json.
+   - Se llamo el método de `ExplorerService` para filtrar por misión, usando el parámetro mission y la lista de explorers.
+   - Hacer un return del resultado obtenido.
 4. Se creo un método `static getExplorersUsernamesByMission(mission)` y se regreso la lista de usernames de los explorers filtrados por la misión enviada.
 5. Se creo un método `static getExplorersAmountByMission(mission)` y se regreso la cantidad de explorers en la misión enviada.
 
@@ -285,29 +285,33 @@ La finalidad de la separación de clases y directorios es que ayuda a tener una 
 
 ![Archivo ExplorerController.test.js](./images/ExplorerController-test.png "Archivo ExplorerController.test.js")
 
-Al archivo ExplorerController también se le realizó pruebas de unidad. 
+Al archivo ExplorerController también se le realizó pruebas de unidad.
 
 Para el primer test se obtuvo la lista de explorers por misión, para el segundo test se obtuvo la lista de nombres de usuarios de explorers por misión, para el tercer test se obtuvo la cantidad de explorers dependiendo de la misión. Para todos estos test la misión que se utilizó fue con node y todas pasaron.
 
 #### Creando server con API
+
 1. Se creo un script en `lib/server.js`.
 2. Se creo un servidor de express.
-  - Se instaló express.
-  - Se creo un server básico.
-  - Se automatizo el package.json para automatizar el server, donde se agregó la siguiente línea dentro del apartado `scripts`:
+
+- Se instaló express.
+- Se creo un server básico.
+- Se automatizo el package.json para automatizar el server, donde se agregó la siguiente línea dentro del apartado `scripts`:
   `"server": "node ./lib/server.js"`, para después solo ejecutar el comando `npm run server` para iniciar el servidor.
+
 4. Se importo el controller.
 5. Se creo el primer endpoint para recibir un parámetro por query params, y regresar la lista de explorers filtrados por el parámetro.
 
-    Notas:
-      - Este es un método GET que va a devolver información cuando se consulte.
-      - La url de este endpoint será: ``localhost:3000/v1/explorers/:mission`` (:mission es un query param).
-      - Se puede probar esta url con ``localhost:3000/v1/explorers/node`` o ``localhost:3000/v1/explorers/java``.
-      - El query param que se envia por la url se puede recibir como ``const mission = request.params.mission;``.
-      - Revisa como regresar información: ``response.json(explorersInMission)``.
+   Notas:
 
+   - Este es un método GET que va a devolver información cuando se consulte.
+   - La url de este endpoint será: ``localhost:3000/v1/explorers/:mission`` (:mission es un query param).
+   - Se puede probar esta url con ``localhost:3000/v1/explorers/node`` o ``localhost:3000/v1/explorers/java``.
+   - El query param que se envia por la url se puede recibir como ``const mission = request.params.mission;``.
+   - Revisa como regresar información: ``response.json(explorersInMission)``.
 6. Se creo otro endpoint para regresar la cantidad de explorers según la misión que se envié.
-    - Dentro del endpoint se puede regresar un objeto con el nombre de la misión y la cantidad: response.json({mission: request.params.mission, quantity: explorersAmountInMission});
+
+   - Dentro del endpoint se puede regresar un objeto con el nombre de la misión y la cantidad: response.json({mission: request.params.mission, quantity: explorersAmountInMission});
 7. Se creo el último endpoint para regresar la lista de usernames de los explorers filtrados por la misión.
 
 `Archivo server.js`
@@ -324,3 +328,74 @@ Para el primer test se obtuvo la lista de explorers por misión, para el segundo
 `Endpoint para regresar la lista de usernames de los explorers filtrados por la misión.`
 
 ![Resultados del endpoint 3](./images/endpoint-3.png "Resultados del endpoint 3")
+
+## Tercera parte - Nuevo requerimiento
+
+Hasta el momento se refactorizo el script legado y se ha creado una API para exponer la funcionalidad.
+
+Como nuevo requerimiento se necesita parte de lo que ya se tiene pero diferente forma, es decir, al enviar un score se le dará su correspondiente al trick. Esa validación es la que ya se tiene en FizzbuzzService. Pero ahora no se necesita agregar un campo a ningún explorer, solo regresar la palabra 'Fizz', 'Buzz', 'Fizzbuzz' o el score mismo, según es el caso.
+Entonces, en base al nuevo requerimiento se creo un endpoint para recibir un número y aplicar la validación del fizzbuzz.
+
+| Endpoint | Request | Response |
+|---|---|---|
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/1` | `{score: 1, trick: 1}` |
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/3` | `{score: 3, trick: "Fizzz"}` |
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/5` | `{score: 5, trick: "Buzz"}` |
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/15` | `{score: 15, trick: "Fizzbuzz"}` |
+
+De tal manera que se consigue un nuevo flujo de la funcionalidad:
+
+```mermaid
+  graph TD;
+      FizzbuzzService-->ExplorerController;
+      ExplorerController-->Server;
+```
+
+El único punto de conexión que debe haber entre nuestra funcionalidad y el server será el ExplorerController. Así vamos a mantener una organización y separación de responsabilidades adecuado.
+
+Se creará la nueva funcionalidad dentro de FizzbuzzService, misma que será usada en el ExplorerController y de ahí podrá ser implementada en el server.
+
+1. Se creo un nuevo método `static applyValidationInNumber(number)` en `FizzbuzzService`.
+    - Se implemento la validación de fizzbuzz, solo regresa el valor: "Fizz", "Buzz", "Fizzbuzz" o el mismo número recibido.
+2. Se añadio un nuevo método en ``ExplorerController`` que recibe un número y usa la función del FizzbuzzService que se creo en el paso anterior.
+3. Finalmente se uso este método dentro de un nuevo endpoint en el server. 
+
+`Método static applyValidationInNumber(number) en FizzbuzzService`
+
+```
+static applyValidationInNumber(number){
+        if(number % 5 === 0 && number % 3 === 0){
+            return number = "FIZZBUZZ";
+
+        } else if (number % 3 === 0){
+            return number = "FIZZ";
+
+        } else if (number % 5 === 0){
+            return number = "BUZZ";
+
+        } else{
+            return number;
+        }
+    };
+```
+
+`Método getValidationInNumber en ExplorerController.js que recibe un número y usa la función del FizzbuzzService que se creo en el paso anterior.`
+
+```
+static getValidationInNumber(number){
+        return FizzbuzzService.applyValidationInNumber(number);
+    }
+```
+
+`Nuevo endpoint en el archivo server.js`
+```
+app.get ("/v1/fizzbuzz/:score", (request, response) => {
+    const score = request.params.score;
+    const valorTrick = ExplorerController.getValidationInNumber(score);
+    response.json({score: request.params.score, trick: valorTrick});
+});
+```
+
+`Endpoint para mostra la validación FizzbuzzService.`
+
+![Resultados del nuevo endpoint 3](./images/nuevo-endpoint.png "Resultados del nuevo endpoint 3")
