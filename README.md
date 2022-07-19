@@ -236,11 +236,11 @@ Hasta el momento se cuenta con la siguiente estructura de directorio:
 - Carpeta *services*: Se tienen dos clases para realizar toda la lógica que se necesita.
 - Carpeta *utils*: Se tiene una clase para leer un archivo json.
 
-| Endpoint                                         | Request                                   | Response                            |
-| -------------------------------------------------| ------------------------------------------|-------------------------------------|
-| `localhost:3000/v1/explorers/:mission`           | `localhost:3000/v1/explorers/node`        | Deberás obtener la lista<br />de explorers en la misión<br />enviaste (node o java).           |
-| `localhost:3000/v1/explorers/amount/:mission`    | `localhost:3000/v1/explorers/amount/node` | Deberás obtener la cantidad<br />de explorers según la misión<br />que enviaste (node o java). |
-| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de<br />usernames en la misión que<br />enviaste (node o java).        |
+| Endpoint | Request | Response |
+|---|---|---|
+| `localhost:3000/v1/explorers/:mission` | `localhost:3000/v1/explorers/node` | Deberás obtener la lista de explorers en la misión que enviaste (node o java) |
+| `localhost:3000/v1/explorers/amount/:mission` | `localhost:3000/v1/explorers/amount/node` | Deberás obtener la cantidad de explorers según la misión que enviaste (node o java) |
+| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de usernames en la misión que enviaste (node o java) |
 
 ### API con express
 
