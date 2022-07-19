@@ -6,22 +6,15 @@ Este proyecto consiste en 3 partes, la primera parte tiene como objetivo refacto
 
 La refactorización tiene el objetivo de mejorar el código, de modularizar y darle estructura a lo que tenemos, lo que permite que pueda leerse o interpretarse de la manera más fácil posile.
 
-Para está práctica se utilizó un archivo tipo json (se puede encontrar en el proyecto como explorers.json) que contiene a modo de ejemplo una lista de participantes en Launch X (nombre del curso), a partir de la lista se realizará lo siguiente:
+Para está práctica se utilizó un archivo tipo json (se puede encontrar en el proyecto como explorers.json) que contiene a modo de ejemplo una lista de participantes en Launch X (nombre del curso), a partir de la lista se realizó lo siguiente:
 
-* Obtener la lista de explorers que solo estén en node.
-* Obtener la cantidad de explorers que están en node.
-* Obtener la lista de usuarios de github de los explorers que están en node.
+* Se obtuvo la lista de explorers que solo estén en node.
+* Se obtuvo la cantidad de explorers que están en node.
+* Se obtuvo la lista de usuarios de github de los explorers que están en node.
 * De acuerdo a la propiedad score del explorer o participante se hará una validación llamada FizzBuzz.
 
 **¿En que consiste la validación FizzBuzz?**
 Si el participante tiene un score que sea divisible entre 3 y el modulo o también conocido como residuo es 0 deberá tener un campo trick que diga FIZZ, si tiene un score divisible entre 5 y el modulo es 0 al campo trick se le asignará el valor BUZZ, si tiene un score que sea divisible entre 3 y 5, y el modulo es 0 el campo trick tendrá el valor de FIZZBUZZ. En caso contrario, de no cumplir las validaciones anteriores al campo trick se le asignará el valor del score. Actualmente en el código legado las últimas 3 validaciones se corren independientemente. Se necesita una misma validación que apliqué las tres reglas a toda la lista.
-
-<!-- 
-Cabe aclarar que además de refactorizar el código, también se realizó lo siguiente:
-
-* Se incluyeron pruebas unitarias con jest.
-* Automatización de pruebas con GitHub Actions.
-* Uso de Linter (ESLint). -->
 
 **NOTA**
 El proyecto se inicializo con npm, para lo cuál se ejecuto el siguiente comando:
@@ -36,17 +29,17 @@ El script se modularizo en orientación a objetos para darle una mejor estructur
 
 Se crearon 3 archivos JavaScript:
 
-* Reader.js: En este archivo se creo una clase llamada Reader y se necesito un método static para leer el archivo y obtener la información de los explorers.
-* ExplorerService.js: En este archivo se creo una clase llamada FizzbuzzService y dentro se implementarón tres métodos static para obtener la lista de explorers que están en node, obtener la cantidad de explorers que estan en node y obtener la lista de usuarios de github de los explorers que están en node. En este service vamos a realizar todas las operaciones de filtrado y mapeo que se necesiten.
-* FizzbuzzService.js: Se creo una clase llamada FizzbuzzService y dentro tendrá un método static para aplicar la validación sobre un explorer y agregarle el campo que se necesita.
+* Reader.js: En este archivo se creó una clase llamada Reader y se necesito un método static para leer el archivo y obtener la información de los explorers.
+* ExplorerService.js: En este archivo se creó una clase llamada FizzbuzzService y dentro se implementarón tres métodos static para obtener la lista de explorers que están en node, obtener la cantidad de explorers que estan en node y obtener la lista de usuarios de github de los explorers que están en node. En este service vamos a realizar todas las operaciones de filtrado y mapeo que se necesiten.
+* FizzbuzzService.js: Se creó una clase llamada FizzbuzzService y dentro tendrá un método static para aplicar la validación sobre un explorer y agregarle el campo que se necesita.
 
 #### Reader.js
 
 Para el archivo Reader.js se realizó lo siguiente:
 
-* Se creo el archivo y carpetas necesarias en **lib/utils/Reader.js**.
-* Dentro del archivo se creo una clase llamada Reader.
-* Se creo un método static llamado readJsonFile que recibe un path (el path del archivo a leer).
+* Se creó el archivo y carpetas necesarias en **lib/utils/Reader.js**.
+* Dentro del archivo se creó una clase llamada Reader.
+* Se creó un método static llamado readJsonFile que recibe un path (el path del archivo a leer).
 * Se guardo la lógica para leer el archivo y se regreso la información.
 
 ![Archivo Reader.js](./images/reader.png "Archivo Reader.js")
@@ -58,8 +51,8 @@ Por último, exportamos el archivo para que pueda ser utilizado en otras partes.
 
 Para el archivo ExplorerService.js se realizó lo siguiente:
 
-* Se creo el archivo y carpetas necesarias en **lib/services/ExplorerService.js**.
-* Dentro del archivo se creo una clase llamada ExplorerService.
+* Se creó el archivo y carpetas necesarias en **lib/services/ExplorerService.js**.
+* Dentro del archivo se creó una clase llamada ExplorerService.
 * Se crearon los siguientes métodos:
   * static filterByMission(explorers, mission)
   * static getAmountOfExplorersByMission(explorers, mission)
@@ -77,8 +70,8 @@ Por último, el tercer método getExplorersUsernameByMission permite obtener la 
 
 Para el archivo FizzbuzzService.js se realizó lo siguiente:
 
-* Se creo el archivo y carpetas necesarias en **lib/services/FizzbuzzService.js**.
-* Dentro del archivo se creo una clase llamada FizzbuzzService.
+* Se creó el archivo y carpetas necesarias en **lib/services/FizzbuzzService.js**.
+* Dentro del archivo se creó una clase llamada FizzbuzzService.
 * Se crearon el siguiente métodos:
   * static applyValidationInExplorer(explorers)
 
@@ -97,7 +90,7 @@ npm install --save-dev jest
 
 Esto indica que se agrega la dependencia jest, y que se agregue para el ambiente de desarrollo --save-dev.
 
-Se creo una carpeta especial para los test.
+Se creó una carpeta especial para los test.
 
 #### Reader.test.js
 
@@ -118,9 +111,9 @@ El primer archivo se utiliza para la lista de los explorers y el segundo para qu
 
 La constante explorers se pone de forma general para que pueda ser utilizada en todos los test.
 
-En el primer test se obtiene la lista de los explorers que están en node, en el expect mostramos el resultado esperado.
+En el primer test se obtiene la lista de los explorers que están en node, en el expect se muestra el resultado esperado.
 
-En el segundo test se obtiene la cantidad de explorers que están en node, como resultado esperado se pone el número 10 ya que es la cantidad de explorers.
+En el segundo test se obtiene la cantidad de explorers que están en node, como resultado esperado se pone el número 10 ya que es la cantidad de explorers en node.
 
 En el tercer test se obtiene la lista de los nombres de usuarios de github de los explorers que están en node, en el resultado esperado se ponen los nombres de usuarios.
 
@@ -136,7 +129,7 @@ Y así sucesivamente ocurre con los demás test.
 
 ### Automatización de pruebas con GitHub Actions
 
-Para las pruebas automatizadas se creo un nuevo archivo con la ruta `.github/workflows/test.yml`
+Para las pruebas automatizadas se creó un nuevo archivo con la ruta `.github/workflows/test.yml`
 
 En el mismo archivo se útilizo el siguiente código:
 
@@ -189,7 +182,7 @@ Este es un GitHub Action que automatiza la ejecución de las pruebas cada vez qu
 
 JS y cada lenguaje tienen herramientas para ayudarnos a cuidar la legibilidad en nuestro código, se les conoce como linters.
 
-Para este proyecto se utilizó ESLint, para instalarlo solo se necesita el siguiente comando `npm install eslint --save-de`
+Para este proyecto se utilizó ESLint, para instalarlo solo se necesita el siguiente comando `npm install eslint --save-dev`
 
 Después, se debe de ejecutar el siguiente comando `npm init @eslint/config` para generar la configuración del linter.
 
@@ -243,11 +236,11 @@ Hasta el momento se cuenta con la siguiente estructura de directorio:
 - Carpeta *services*: Se tienen dos clases para realizar toda la lógica que se necesita.
 - Carpeta *utils*: Se tiene una clase para leer un archivo json.
 
-| Endpoint                                           | Request                                        | Response                                                                               |
-| -------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `localhost:3000/v1/explorers/:mission`           | `localhost:3000/v1/explorers/node`           | Deberás obtener la lista de explorers en la misión que enviaste (node o java)        |
-| `localhost:3000/v1/explorers/amount/:mission`    | `localhost:3000/v1/explorers/amount/node`    | Deberás obtener la cantidad de explorers según la misión que enviaste (node o java) |
-| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de usernames en la misión que enviaste (node o java)        |
+| Endpoint                                         | Request                                   | Response                            |
+| -------------------------------------------------| ------------------------------------------|-------------------------------------|
+| `localhost:3000/v1/explorers/:mission`           | `localhost:3000/v1/explorers/node`        | Deberás obtener la lista<br />de explorers en la misión<br />enviaste (node o java).           |
+| `localhost:3000/v1/explorers/amount/:mission`    | `localhost:3000/v1/explorers/amount/node` | Deberás obtener la cantidad<br />de explorers según la misión<br />que enviaste (node o java). |
+| `localhost:3000/v1/explorers/usernames/:mission` | `localhost:3000/v1/explorers/usernames/node` | Deberás obtener la lista de<br />usernames en la misión que<br />enviaste (node o java).        |
 
 ### API con express
 
@@ -271,15 +264,15 @@ La finalidad de la separación de clases y directorios es que ayuda a tener una 
 
 ![Archivo ExplorerController.js](./images/ExplorerController.png "Archivo ExplorerController.js")
 
-1. Se creo el archivo ExplorerController en el siguiente directorio `lib/controllers/ExplorerController.js`.
+1. Se creó el archivo ExplorerController en el siguiente directorio `lib/controllers/ExplorerController.js`.
 2. Se importaron las clases `ExplorerServices`, `FizzbuzzService` y `Reader`.
-3. Se creo un método para obtener la lista de explorers filtrados por misión:
-   - Se creo un método `static getExplorersByMission` el cual recibe un parámetro llamado mission.
+3. Se creó un método para obtener la lista de explorers filtrados por misión:
+   - Se creó un método `static getExplorersByMission` el cual recibe un parámetro llamado mission.
    - Dentro del método se llamo la función del Reader `Reader.readJsonFile("explorers.json")` para obtener la lista de explorers del archivo json.
    - Se llamo el método de `ExplorerService` para filtrar por misión, usando el parámetro mission y la lista de explorers.
    - Hacer un return del resultado obtenido.
-4. Se creo un método `static getExplorersUsernamesByMission(mission)` y se regreso la lista de usernames de los explorers filtrados por la misión enviada.
-5. Se creo un método `static getExplorersAmountByMission(mission)` y se regreso la cantidad de explorers en la misión enviada.
+4. Se creó un método `static getExplorersUsernamesByMission(mission)` y se regreso la lista de usernames de los explorers filtrados por la misión enviada.
+5. Se creó un método `static getExplorersAmountByMission(mission)` y se regreso la cantidad de explorers en la misión enviada.
 
 #### Pruebas de unidad del controller
 
@@ -291,16 +284,16 @@ Para el primer test se obtuvo la lista de explorers por misión, para el segundo
 
 #### Creando server con API
 
-1. Se creo un script en `lib/server.js`.
-2. Se creo un servidor de express.
+1. Se creó un script en `lib/server.js`.
+2. Se creó un servidor de express.
 
 - Se instaló express.
-- Se creo un server básico.
+- Se creó un server básico.
 - Se automatizo el package.json para automatizar el server, donde se agregó la siguiente línea dentro del apartado `scripts`:
   `"server": "node ./lib/server.js"`, para después solo ejecutar el comando `npm run server` para iniciar el servidor.
 
 4. Se importo el controller.
-5. Se creo el primer endpoint para recibir un parámetro por query params, y regresar la lista de explorers filtrados por el parámetro.
+5. Se creó el primer endpoint para recibir un parámetro por query params, y regresar la lista de explorers filtrados por el parámetro.
 
    Notas:
 
@@ -309,10 +302,10 @@ Para el primer test se obtuvo la lista de explorers por misión, para el segundo
    - Se puede probar esta url con ``localhost:3000/v1/explorers/node`` o ``localhost:3000/v1/explorers/java``.
    - El query param que se envia por la url se puede recibir como ``const mission = request.params.mission;``.
    - Revisa como regresar información: ``response.json(explorersInMission)``.
-6. Se creo otro endpoint para regresar la cantidad de explorers según la misión que se envié.
+6. Se creó otro endpoint para regresar la cantidad de explorers según la misión que se envié.
 
    - Dentro del endpoint se puede regresar un objeto con el nombre de la misión y la cantidad: response.json({mission: request.params.mission, quantity: explorersAmountInMission});
-7. Se creo el último endpoint para regresar la lista de usernames de los explorers filtrados por la misión.
+7. Se creó el último endpoint para regresar la lista de usernames de los explorers filtrados por la misión.
 
 `Archivo server.js`
 ![Archivo server.js](./images/server.png "Archivo server.js")
@@ -334,13 +327,13 @@ Para el primer test se obtuvo la lista de explorers por misión, para el segundo
 Hasta el momento se refactorizo el script legado y se ha creado una API para exponer la funcionalidad.
 
 Como nuevo requerimiento se necesita parte de lo que ya se tiene pero diferente forma, es decir, al enviar un score se le dará su correspondiente al trick. Esa validación es la que ya se tiene en FizzbuzzService. Pero ahora no se necesita agregar un campo a ningún explorer, solo regresar la palabra 'Fizz', 'Buzz', 'Fizzbuzz' o el score mismo, según es el caso.
-Entonces, en base al nuevo requerimiento se creo un endpoint para recibir un número y aplicar la validación del fizzbuzz.
+Entonces, en base al nuevo requerimiento se creó un endpoint para recibir un número y aplicar la validación del fizzbuzz.
 
-| Endpoint | Request | Response |
-|---|---|---|
-| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/1` | `{score: 1, trick: 1}` |
-| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/3` | `{score: 3, trick: "Fizzz"}` |
-| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/5` | `{score: 5, trick: "Buzz"}` |
+| Endpoint                              | Request                           | Response                           |
+| ------------------------------------- | --------------------------------- | ---------------------------------- |
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/1`  | `{score: 1, trick: 1}`           |
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/3`  | `{score: 3, trick: "Fizzz"}`     |
+| `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/5`  | `{score: 5, trick: "Buzz"}`      |
 | `localhost:3000/v1/fizzbuzz/:score` | `localhost:3000/v1/fizzbuzz/15` | `{score: 15, trick: "Fizzbuzz"}` |
 
 De tal manera que se consigue un nuevo flujo de la funcionalidad:
@@ -355,10 +348,10 @@ El único punto de conexión que debe haber entre nuestra funcionalidad y el ser
 
 Se creará la nueva funcionalidad dentro de FizzbuzzService, misma que será usada en el ExplorerController y de ahí podrá ser implementada en el server.
 
-1. Se creo un nuevo método `static applyValidationInNumber(number)` en `FizzbuzzService`.
-    - Se implemento la validación de fizzbuzz, solo regresa el valor: "Fizz", "Buzz", "Fizzbuzz" o el mismo número recibido.
-2. Se añadio un nuevo método en ``ExplorerController`` que recibe un número y usa la función del FizzbuzzService que se creo en el paso anterior.
-3. Finalmente se uso este método dentro de un nuevo endpoint en el server. 
+1. Se creó un nuevo método `static applyValidationInNumber(number)` en `FizzbuzzService`.
+   - Se implemento la validación de fizzbuzz, solo regresa el valor: "Fizz", "Buzz", "Fizzbuzz" o el mismo número recibido.
+2. Se añadio un nuevo método en ``ExplorerController`` que recibe un número y usa la función del FizzbuzzService que se creó en el paso anterior.
+3. Finalmente se uso este método dentro de un nuevo endpoint en el server.
 
 `Método static applyValidationInNumber(number) en FizzbuzzService`
 
@@ -379,7 +372,7 @@ static applyValidationInNumber(number){
     };
 ```
 
-`Método getValidationInNumber en ExplorerController.js que recibe un número y usa la función del FizzbuzzService que se creo en el paso anterior.`
+`Método getValidationInNumber en ExplorerController.js que recibe un número y usa la función del FizzbuzzService que se creó en el paso anterior.`
 
 ```
 static getValidationInNumber(number){
@@ -388,6 +381,7 @@ static getValidationInNumber(number){
 ```
 
 `Nuevo endpoint en el archivo server.js`
+
 ```
 app.get ("/v1/fizzbuzz/:score", (request, response) => {
     const score = request.params.score;
@@ -396,6 +390,6 @@ app.get ("/v1/fizzbuzz/:score", (request, response) => {
 });
 ```
 
-`Endpoint para mostra la validación FizzbuzzService.`
+`Endpoint para mostrar la validación FizzbuzzService.`
 
 ![Resultados del nuevo endpoint 3](./images/nuevo-endpoint.png "Resultados del nuevo endpoint 3")
