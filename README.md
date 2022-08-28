@@ -393,3 +393,74 @@ app.get ("/v1/fizzbuzz/:score", (request, response) => {
 `Endpoint para mostrar la validación FizzbuzzService.`
 
 ![Resultados del nuevo endpoint 3](./images/nuevo-endpoint.png "Resultados del nuevo endpoint 3")
+
+## Bot Telegram
+
+### Parte 1: Crea un bot de telegram
+
+Para crear un bot de telegram se debe de seguir los siguientes pasos:
+* Acceder al Bot Father: [https://telegram.me/BotFather](https://telegram.me/BotFather)
+* En el chat de Bot Father enviar un mensaje con el texto: `/newbot`
+* Enseguida solicita escoger un nombre para el bot, en este caso se nombró: `FizzbuzzLaunchXBot`
+* Después, solicita escoger un username para el bot, el cual fue: `ValleyBlue_bot`
+* Si todo esta correcto muestra un mensaje de felicidades por crear el bot y también brinda un token que se utilizará más adelante.
+![Mensaje de bot creado correctamente](./images/bot-creado.png "Mensaje de bot creado correctamente")
+* Así mismo en el mensaje nos brinda una url para abrir un nuevo chat con el bot creado.
+![Nuevo chat del bot creado](./images/chat-bot.jpg "Nuevo chat del bot creado")
+
+### Parte 2: Fizzbuz
+* Antes de escribir código se debe instalar la dependencia: `npm install node-telegram-bot-api --save`
+* Se crea un nuevo script llamado `lib/bot.js`
+* Se modifica el `package.json`, en la parte de scripts se agrega: `"bot": "node ./lib/bot.js"`
+* En el archivo `bot.js` se agrega el siguiente contenido:
+```
+const TelegramBot = require("node-telegram-bot-api");
+const ExplorerController = require("./controllers/ExplorerController");
+
+// replace the value below with the Telegram token you receive from @BotFather
+const token = "";
+
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(token, {polling: true});
+
+// Matches "/echo [whatever]"
+bot.onText(/\/echo (.+)/, (msg, match) => {
+    // 'msg' is the received Message from Telegram
+    // 'match' is the result of executing the regexp above on the text content
+    // of the message
+
+    const chatId = msg.chat.id;
+    const resp = match[1]; // the captured "whatever"
+
+    // send back the matched "whatever" to the chat
+    bot.sendMessage(chatId, resp);
+});
+
+// Listen for any kind of message. There are different kinds of
+// messages.
+bot.on("message", (msg) => {
+    const chatId = msg.chat.id;
+    const numberToApplyFb = parseInt(msg.text);
+
+    if(!isNaN(numberToApplyFb)){
+        const fizzbuzzTrick = ExplorerController.applyFizzbuzz(numberToApplyFb);
+        const responseBot = `Tu número es: ${numberToApplyFb}. Validación: ${fizzbuzzTrick}`;
+        bot.sendMessage(chatId, responseBot);
+    } else {
+        bot.sendMessage(chatId, "Envía un número válido");
+    }
+
+});
+```
+Dentro del código agregado se debe de agregar el token que se recibio de Bot Father, se debe verificar que este bien la ruta de ExplorerController
+
+*Nota: No se debe versionar el token*.
+
+* Se debe ejecutar el comando `npm run bot`, entonces se debe ir al chat del nuevo bot y cada que se envíe un número deberá darnos la validación de Fizzbuzz. Cualquier otro valor mandará un mensaje de error.
+![Validación de Fizzbuzz](./images/bot-fizzbuzz.jpg "Validación de Fizzbuzz")
+
+* Se refactoriza el código anterior y se envía al ExplorerController, después, se valida que al enviar la palabra "node" o "java", el bot regrese la lista de nombre de los explorers de esa misión.
+  
+*Nota: El bot solo puede recibir un string, se tendrá que armar ese string con los nombres.*
+
+![Validación de misión](./images/bot-mision.jpg "Validación de misión")
